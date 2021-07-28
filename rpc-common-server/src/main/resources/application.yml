@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: NETTY_COMMON_SERVER
+server:
+  port: 9000

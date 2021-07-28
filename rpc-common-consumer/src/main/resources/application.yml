@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: NETTY_COMMON_CONSUMER
+server:
+  port: 9001
