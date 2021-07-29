@@ -10,6 +10,7 @@ import lombok.Data;
 public class RpcRequest {
     /**
      * 请求对象id
+     * 实现关联
      */
     private String requestId;
     private String className;

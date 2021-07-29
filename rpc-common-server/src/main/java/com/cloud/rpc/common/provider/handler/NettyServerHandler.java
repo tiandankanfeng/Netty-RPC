@@ -55,7 +55,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<String> impl
         // business process
         try {
             rpcResponse.setResult(handler(rpcRequest));
-        }catch (Exception e) {
+        } catch (Exception e) {
             rpcResponse.setError(e.getMessage());
             e.printStackTrace();
         }
