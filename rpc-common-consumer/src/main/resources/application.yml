@@ -1,5 +1,11 @@
 spring:
   application:
     name: NETTY_COMMON_CONSUMER
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        register: false # 消费者无需注册到 Registry
 server:
   port: 9001

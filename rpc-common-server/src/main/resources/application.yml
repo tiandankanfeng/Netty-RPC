@@ -1,8 +1,14 @@
 spring:
   application:
     name: NETTY_COMMON_SERVER
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
 server:
   port: 9000
 #nacos:
 #  discovery:
 #    server-addr: 127.0.0.1:8848
+
+

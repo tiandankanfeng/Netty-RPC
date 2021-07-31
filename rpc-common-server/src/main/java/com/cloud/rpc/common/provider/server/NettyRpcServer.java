@@ -1,5 +1,6 @@
 package com.cloud.rpc.common.provider.server;
 
+import com.cloud.rpc.common.provider.constants.NettyServerConstants;
 import com.cloud.rpc.common.provider.handler.NettyServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -29,7 +30,7 @@ public class NettyRpcServer implements DisposableBean {
     public void start(String inetHost, Integer inetPort) {
 
         if (StringUtils.isEmpty(inetHost) || StringUtils.isEmpty(inetPort)) {
-            startUp("127.0.0.1", 9898);
+            startUp(NettyServerConstants.inetHost, NettyServerConstants.port);
         } else {
             startUp(inetHost, inetPort);
         }

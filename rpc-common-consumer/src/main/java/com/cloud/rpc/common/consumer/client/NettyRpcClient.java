@@ -12,6 +12,8 @@ import io.netty.handler.codec.string.StringEncoder;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.*;
@@ -25,14 +27,28 @@ public class NettyRpcClient implements InitializingBean, DisposableBean {
 
     @Autowired
     private NettyClientHandler clientHandler;
+    @Autowired
+    private LoadBalancerClient loadBalancerClient;
+    @Autowired
+    private DiscoveryClient discoveryClient;
+
 
     private NioEventLoopGroup group = new NioEventLoopGroup();
     private Channel ch;
     private ExecutorService executor = Executors.newCachedThreadPool(); // 仅个人开发时这么写
+    private String remoteAddress;
+
+//
+//    {
+//        remoteAddress = loadBalancerClient.choose("NETTY-COMMON-SERVER").getHost();
+//    }
+
 
 
     @Override
     public void afterPropertiesSet() throws Exception {
+
+        remoteAddress = loadBalancerClient.choose("NETTY-COMMON-SERVER").getHost();
 
         try {
             ChannelFuture future = new Bootstrap()
@@ -46,7 +62,7 @@ public class NettyRpcClient implements InitializingBean, DisposableBean {
                             // business process
                             channel.pipeline().addLast(clientHandler);
                         }
-                    }).connect("127.0.0.1", 9898).sync();
+                    }).connect(remoteAddress, 9898).sync();
 
             System.out.println("client connect sucessfully!");
 
