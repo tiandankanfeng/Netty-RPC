@@ -21,10 +21,20 @@ public class UserController {
 
     @RpcReference
     private UserService userService;
+    @Autowired
+    private LoadBalancerClient loadBalancerClient;
 
     @GetMapping("/{id}")
     public User getById(@PathVariable("id") Integer id) {
         return userService.getById(id);
     }
+
+    @GetMapping("/getServiceInfoByName/{serviceName}")
+    public String getServiceInfoByName(@PathVariable("serviceName") String serviceName) {
+        ServiceInstance instance = loadBalancerClient.choose(serviceName);
+        return instance.toString();
+    }
+
+
 
 }
